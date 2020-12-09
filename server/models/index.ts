@@ -1,6 +1,7 @@
 import * as sequelize from "sequelize";
 import {UserFactory} from "./user-model";
 import {PostsFactory} from "./post-model";
+import {StatisticsFactory} from "./statistic-model";
 
 export const dbConfig = new sequelize.Sequelize(
     "posts_database",
@@ -21,5 +22,8 @@ export const dbConfig = new sequelize.Sequelize(
 
 export const User = UserFactory(dbConfig);
 export const Posts = PostsFactory(dbConfig);
+export const Statistics = StatisticsFactory(dbConfig);
 
 User.hasMany(Posts);
+User.hasMany(Statistics);
+Posts.hasMany(Statistics);

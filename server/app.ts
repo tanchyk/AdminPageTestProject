@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import {dbConfig} from "./models";
+import usersRouter from "./routes/users.routes";
 
 const errorHandler = (err: Errback, req: Request, res: Response, next: NextFunction) => {
     console.error(err);
@@ -23,6 +24,8 @@ dbConfig
     .catch(() => {
         throw "error";
     });
+
+app.use('/users', usersRouter);
 
 const PORT = 5000;
 
