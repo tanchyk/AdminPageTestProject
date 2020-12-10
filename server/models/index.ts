@@ -17,6 +17,9 @@ export const dbConfig = new sequelize.Sequelize(
             acquire: 30000,
             idle: 10000,
         },
+        define: {
+            timestamps: false
+        }
     }
 );
 

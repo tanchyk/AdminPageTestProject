@@ -20,6 +20,7 @@ export function UserFactory (sequelize: Sequelize): UserStatic {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
+            allowNull: false
         },
         email: {
             type: DataTypes.STRING,
