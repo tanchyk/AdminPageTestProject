@@ -1,12 +1,13 @@
 import React from "react";
 import {Switch, Route, Redirect } from 'react-router-dom';
+import {UsersPage} from "./pages/UsersPage";
 
 
 export const useRoutes = () => {
     return (
         <Switch>
             <Route path="/users" exact>
-                {/*<UserPage/>*/}
+                <UsersPage/>
             </Route>
             <Route path="/users/:userId" exact>
                 {/*<SingleUserPage/>*/}

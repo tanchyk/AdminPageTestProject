@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import {dbConfig} from "./models";
 import usersRouter from "./routes/users.routes";
+import postsRouter from "./routes/posts.routes";
 
 const errorHandler = (err: Errback, req: Request, res: Response, next: NextFunction) => {
     console.error(err);
@@ -26,6 +27,7 @@ dbConfig
     });
 
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter)
 
 const PORT = 5000;
 

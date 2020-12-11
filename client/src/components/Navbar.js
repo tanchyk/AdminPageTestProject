@@ -53,7 +53,7 @@ export const Navbar = ({}) => {
                         <Icon path={mdiAccountCircle}
                               title="User Profile"
                               size={1}
-                              color="#2a9d8f"
+                              color="#298880"
                         />
                     </ListItemIcon>
                     <ListItemText primary='Users'/>
@@ -63,7 +63,7 @@ export const Navbar = ({}) => {
                         <Icon path={mdiPost}
                               title="User Profile"
                               size={1}
-                              color="#2a9d8f"
+                              color="#298880"
                         />
                     </ListItemIcon>
                     <ListItemText primary='Posts'/>
