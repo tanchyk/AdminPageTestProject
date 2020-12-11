@@ -36,4 +36,11 @@ export const selectAllUsers = (state) => {
     return state.users.users
 };
 
+export const selectUserById = (state, userId) => state.users.users.find((user) => {
+    const num = parseInt(userId);
+    if(user.id === num) {
+        return user;
+    }
+})
+
 export default usersSlice.reducer
