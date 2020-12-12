@@ -2,8 +2,11 @@ import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import {fetchUsers, selectUserById} from "../store/usersSlice";
 import Divider from "@material-ui/core/Divider";
-import {fetchPostByUser, selectAllPosts} from "../store/postsSlice";
+import {fetchPosts, selectAllPosts} from "../store/postsSlice";
 import {PostCard} from "../components/PostCard";
+import {AddPost} from "../components/AddPost";
+import {UserCard} from "../components/UserCard";
+import state from '../store/store'
 
 export const SingleUserPage = ({match}) => {
     const dispatch = useDispatch();
@@ -24,7 +27,7 @@ export const SingleUserPage = ({match}) => {
 
     useEffect(() => {
         if (postStatus === 'idle') {
-            return dispatch(fetchPostByUser(userId));
+            return dispatch(fetchPosts());
         }
     }, [postStatus, dispatch])
 
@@ -37,23 +40,29 @@ export const SingleUserPage = ({match}) => {
     }
 
     let postsAry;
-    if(error) {
-        console.log(error)
-        postsAry = <h1>Sorry, our server has responded with an error</h1>
-    } else {
+    console.log(state.getState());
+    if (userStatus === 'loading') {
+        postsAry = <div className="loader">Loading...</div>
+    } else if (userStatus === 'succeeded') {
         const orderedPosts = posts
             .slice()
             .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
 
         postsAry = orderedPosts.map((post, key) => {
-            return <PostCard post={post} key={key}/>
+            if(post.userId === user.id) {
+                return <PostCard post={post} key={key}/>
+            }
         })
+    } else if (userStatus === 'error') {
+        console.log(error)
+        postsAry = <h1>Sorry, our server has responded with an error</h1>
     }
 
     return (
         <div>
             <h1 style={{marginLeft: 260}}>Name: {user.name}, Email: {user.email}</h1>
             <Divider/>
+            <AddPost userId={userId}/>
             {postsAry}
         </div>
     );

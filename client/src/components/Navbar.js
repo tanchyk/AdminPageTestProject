@@ -7,7 +7,7 @@ import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from '@mdi/react'
 import {mdiAccountCircle} from '@mdi/js';
-import { mdiPost } from '@mdi/js';
+import {NavLink} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         marginLeft: theme.spacing(2)
+    },
+    linkStyle: {
+        color: "black",
+        textDecoration: "none"
     }
 }));
 
@@ -48,26 +52,18 @@ export const Navbar = ({}) => {
             <h2 className={classes.logo}>AdminPage</h2>
             <Divider/>
             <List>
-                <ListItem button>
-                    <ListItemIcon>
-                        <Icon path={mdiAccountCircle}
-                              title="User Profile"
-                              size={1}
-                              color="#298880"
-                        />
-                    </ListItemIcon>
-                    <ListItemText primary='Users'/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <Icon path={mdiPost}
-                              title="User Profile"
-                              size={1}
-                              color="#298880"
-                        />
-                    </ListItemIcon>
-                    <ListItemText primary='Posts'/>
-                </ListItem>
+                <NavLink to="/users" className={classes.linkStyle}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Icon path={mdiAccountCircle}
+                                  title="User Profile"
+                                  size={1}
+                                  color="#298880"
+                            />
+                        </ListItemIcon>
+                        <ListItemText primary='Users'/>
+                    </ListItem>
+                </NavLink>
             </List>
         </Drawer>
     );

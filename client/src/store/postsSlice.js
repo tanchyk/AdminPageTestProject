@@ -6,11 +6,11 @@ const initialState = {
     error: null,
 }
 
-// export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-//     const result = await fetch(`http://localhost:5000/posts`).then(response => response.json());
-//     // console.log(result.posts);
-//     return result.posts;
-// });
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+    const response = await fetch(`http://localhost:5000/posts`).then(response => response.json());
+    // console.log(result.posts);
+    return response.posts;
+});
 
 export const fetchPostByUser = createAsyncThunk('posts/fetchPostByUser', async (userId) => {
     const response = await fetch(`http://localhost:5000/users/${userId}/posts`).then(response => response.json());
@@ -22,12 +22,29 @@ export const addNewPost = createAsyncThunk(
     async (initialPost) => {
         const response = await fetch(`http://localhost:5000/users/${initialPost.userId}/posts/new`, {
             method: 'POST',
-            body: {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 title: initialPost.title,
                 body: initialPost.body
-            }
+            })
         }).then(response => response.json());
-        console.log(response.posts);
+        // console.log(response.posts);
+        return response.post;
+    }
+)
+
+export const updatePost = createAsyncThunk(
+    'posts/updatePost',
+    async (initialPost) => {
+        const response = await fetch(`http://localhost:5000/users/${initialPost.userId}/posts/${initialPost.postId}/edit`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: initialPost.title,
+                body: initialPost.body
+            })
+        }).then(response => response.json());
+        // console.log(response.posts);
         return response.post;
     }
 )
@@ -35,36 +52,31 @@ export const addNewPost = createAsyncThunk(
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {
-        postUpdated(state, action) {
-            const { id, title, content } = action.payload
-            const existingPost = state.posts.find((post) => post.id === id)
-            if (existingPost) {
-                existingPost.title = title
-                existingPost.content = content
-            }
-        },
-    },
+    reducers: {},
     extraReducers: {
-        [fetchPostByUser.pending]: (state, action) => {
+        [fetchPosts.pending]: (state, action) => {
             state.status = 'loading';
         },
-        [fetchPostByUser.fulfilled]: (state, action) => {
+        [fetchPosts.fulfilled]: (state, action) => {
             state.status = 'succeeded';
             // Add any fetched posts to the array
             state.posts = state.posts.concat(action.payload);
         },
-        [fetchPostByUser.rejected]: (state, action) => {
+        [fetchPosts.rejected]: (state, action) => {
             state.status = 'failed';
             state.error = action.payload;
+        },
+        [updatePost.fulfilled]: (state, action) => {
+            const post = state.posts.find(post => post.id === action.payload.id);
+            const index = state.posts.indexOf(post)
+            state.posts[index] = action.payload;
+            // state.posts.push(action.payload);
         },
         [addNewPost.fulfilled]: (state, action) => {
             state.posts.push(action.payload);
         },
     },
 });
-
-export const { postUpdated } = postsSlice.actions;
 
 export default postsSlice.reducer;
 
@@ -73,4 +85,9 @@ export const selectAllPosts = (state) => {
     return state.posts.posts
 };
 
-export const selectPostById = (state, postId) => state.posts.posts.find((post) => post.id === postId);
+export const selectPostById = (state, postId) => state.posts.posts.find((post) => {
+    const num = parseInt(postId);
+    if(post.id === num) {
+        return post;
+    }
+})

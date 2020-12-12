@@ -64,10 +64,18 @@ usersRouter.put('/:userId/posts/:postId/edit', async (req: Request, res: Respons
         const {title, body}= req.body;
         if(title && body && userId) {
             // @ts-ignore
-            await Posts.update({title, body, updatedAt: new Date()}, {where: {id: postId}});
-            // @ts-ignore
-            await Statistics.create({updatedAt: new Date(), userId, postId});
-            return res.status(200).json(true);
+            const post = await Posts.findOne({where: {id: postId}});
+            if(post) {
+                post.title = title;
+                post.body = body;
+                post.updatedAt = new Date();
+                await post.save();
+                // @ts-ignore
+                await Statistics.create({updatedAt: new Date(), userId, postId});
+                return res.status(200).json({post});
+            } else {
+                throw new Error();
+            }
         } else {
             throw new Error('No title or body was provided');
         }

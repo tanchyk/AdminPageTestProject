@@ -10,7 +10,10 @@ import {NavLink} from "react-router-dom";
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        marginLeft: 240
+        maxWidth: 600,
+        marginLeft: 260,
+        marginBottom: 10,
+        marginTop: 10
     },
     bullet: {
         display: 'inline-block',

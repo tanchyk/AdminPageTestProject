@@ -2,6 +2,7 @@ import React from "react";
 import {Switch, Route, Redirect } from 'react-router-dom';
 import {UsersPage} from "./pages/UsersPage";
 import {SingleUserPage} from "./pages/SingleUserPage";
+import {SinglePostPage} from "./pages/SinglePostPage";
 
 
 export const useRoutes = () => {
@@ -11,12 +12,7 @@ export const useRoutes = () => {
                 <UsersPage/>
             </Route>
             <Route exact path="/users/:userId" component={SingleUserPage} />
-            <Route path="/posts" exact>
-                {/*<PostsPage/>*/}
-            </Route>
-            <Route path="/posts/:postId" exact>
-                {/*<SinglePostage/>*/}
-            </Route>
+            <Route exact path="/posts/:postId" component={SinglePostPage} />
             <Redirect to="/users"/>
         </Switch>
     );
