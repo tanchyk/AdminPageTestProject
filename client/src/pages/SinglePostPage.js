@@ -1,41 +1,14 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPostByUser, fetchPosts, selectPostById} from "../store/postsSlice";
-import {fetchUsers, selectUserById} from "../store/usersSlice";
-import Divider from "@material-ui/core/Divider";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {fetchPosts, selectPostById} from "../store/postsSlice";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import {UpdatePost} from "../components/UpdatePost";
-import store from "../store/store";
-
-const useStyles = makeStyles({
-    root: {
-        minWidth: 275,
-        maxWidth: 600,
-        marginLeft: 20,
-        marginTop: 10,
-        marginBottom: 10,
-        padding: 0
-    },
-    title: {
-        fontSize: 20,
-        marginLeft: 10
-    },
-    nametag: {
-        fontSize: 16,
-        marginLeft: 10,
-        fontWeight: 200
-    },
-    header: {
-        fontSize: 24,
-        marginLeft: 10
-    }
-});
+import {stylesSinglePost} from "../styles";
 
 export const SinglePostPage = ({match}) => {
     const dispatch = useDispatch();
-    const classes = useStyles();
+    const classes = stylesSinglePost();
     const {postId } = match.params;
 
     const post = useSelector((state) => selectPostById(state, postId));

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Icon from "@mdi/react";
@@ -7,46 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import {updatePost} from "../store/postsSlice";
 import {useDispatch} from "react-redux";
 import { useHistory } from 'react-router-dom'
-
-const useStyles = makeStyles({
-    root: {
-        minWidth: 275,
-        maxWidth: 600,
-        marginLeft: 20,
-        marginTop: 10,
-        marginBottom: 10,
-        padding: 0
-    },
-    buttonText: {
-        color: "white",
-        textDecoration: "none"
-    },
-    textInput: {
-        width: "100%",
-        margin: 5
-    },
-    inputBox: {
-        display: "flex",
-        flexDirection: "column"
-    },
-    button: {
-        width: 120,
-        marginLeft: 5,
-        marginTop: 5,
-        backgroundColor: "#298880",
-        color: "white",
-        '&:hover': {
-            backgroundColor: "#2a9d8f"
-        }
-    }
-});
+import {stylesChangePost} from "../styles";
 
 export const UpdatePost = ({post}) => {
-    const classes = useStyles();
+    const classes = stylesChangePost();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -83,7 +50,7 @@ export const UpdatePost = ({post}) => {
     }
 
     return (
-        <div className={classes.root}>
+        <div className={classes.rootUpdate}>
             <Accordion>
                 <AccordionSummary
                     expandIcon={
@@ -112,6 +79,7 @@ export const UpdatePost = ({post}) => {
                         label="Body"
                         variant="outlined"
                         multiline
+                        rows={4}
                         value={form.body}
                         onChange={changeHandler}
                         className={classes.textInput}

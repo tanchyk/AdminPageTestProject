@@ -13,3 +13,24 @@ code {
     monospace;
 }
 
+.chart {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.titles {
+  margin-left: 260px;
+}
+
+.activity {
+  margin-left: 460px;
+}
+
+@media screen and (max-width: 900px) {
+  .titles {
+    margin-left: 20px;
+  }
+  .activity {
+    margin-left: 20px;
+  }
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import {Drawer, makeStyles} from "@material-ui/core";
+import {Drawer} from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
@@ -8,38 +8,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from '@mdi/react'
 import {mdiAccountCircle} from '@mdi/js';
 import {NavLink} from "react-router-dom";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing(3),
-    },
-    logo: {
-        marginLeft: theme.spacing(2)
-    },
-    linkStyle: {
-        color: "black",
-        textDecoration: "none"
-    }
-}));
+import {stylesNavbar} from "../styles";
 
 export const Navbar = ({}) => {
-    const classes = useStyles();
+    const classes = stylesNavbar();
+
     return (
         <Drawer
             className={classes.drawer}

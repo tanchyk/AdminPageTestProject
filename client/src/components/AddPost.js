@@ -6,47 +6,13 @@ import {mdiArrowDown} from "@mdi/js";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import TextField from "@material-ui/core/TextField";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Button from "@material-ui/core/Button";
 import {useDispatch} from "react-redux";
 import {addNewPost} from "../store/postsSlice";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: 620,
-        margin: "auto",
-        marginBottom: 15,
-        marginTop: 10
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(16),
-        fontWeight: theme.typography.fontWeightBold,
-    },
-    expanded: {
-        margin: "0 auto"
-    },
-    textInput: {
-        width: "100%",
-        margin: 5
-    },
-    inputBox: {
-        display: "flex",
-        flexDirection: "column"
-    },
-    button: {
-        width: 120,
-        marginLeft: 5,
-        marginTop: 5,
-        backgroundColor: "#298880",
-        color: "white",
-        '&:hover': {
-            backgroundColor: "#2a9d8f"
-        }
-    }
-}));
+import {stylesChangePost} from "../styles";
 
 export const AddPost = ({userId}) => {
-    const classes = useStyles();
+    const classes = stylesChangePost();
     const dispatch = useDispatch();
     const [form, setForm] = useState({
         title: '',
@@ -102,6 +68,8 @@ export const AddPost = ({userId}) => {
                         id="body"
                         label="Body"
                         variant="outlined"
+                        multiline
+                        rows={4}
                         onChange={changeHandler}
                         className={classes.textInput}
                     />

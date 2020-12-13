@@ -7,9 +7,8 @@ const initialState = {
 }
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const response = await fetch('http://localhost:5000/users/').then(response => response.json())
-    // console.log(response.users)
-    return response.users
+    const response = await fetch('http://localhost:5000/users/').then(response => response.json());
+    return response.users;
 })
 
 const usersSlice = createSlice({
@@ -18,22 +17,21 @@ const usersSlice = createSlice({
     reducers: {},
     extraReducers: {
         [fetchUsers.pending]: (state, action) => {
-            state.status = 'loading'
+            state.status = 'loading';
         },
         [fetchUsers.fulfilled]: (state, action) => {
             state.status = 'succeeded';
-            // console.log(action.payload)
-            state.users = state.users.concat(action.payload)
+            state.users = state.users.concat(action.payload);
         },
         [fetchUsers.rejected]: (state, action) => {
-            state.status = 'failed'
-            state.error = action.payload
+            state.status = 'failed';
+            state.error = action.payload;
         },
     },
 })
 
 export const selectAllUsers = (state) => {
-    return state.users.users
+    return state.users.users;
 };
 
 export const selectUserById = (state, userId) => state.users.users.find((user) => {
@@ -43,4 +41,4 @@ export const selectUserById = (state, userId) => state.users.users.find((user) =
     }
 })
 
-export default usersSlice.reducer
+export default usersSlice.reducer;

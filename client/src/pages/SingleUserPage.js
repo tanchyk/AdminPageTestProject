@@ -5,8 +5,9 @@ import Divider from "@material-ui/core/Divider";
 import {fetchPosts, selectAllPosts} from "../store/postsSlice";
 import {PostCard} from "../components/PostCard";
 import {AddPost} from "../components/AddPost";
-import {UserCard} from "../components/UserCard";
 import state from '../store/store'
+import {fetchStatistics} from "../store/statisticsSlice";
+import {Chart} from "../components/Chart";
 
 export const SingleUserPage = ({match}) => {
     const dispatch = useDispatch();
@@ -19,17 +20,20 @@ export const SingleUserPage = ({match}) => {
     const postStatus = useSelector((state) => state.posts.status)
     const error = useSelector((state) => state.posts.error)
 
+    const statisticsStatus = useSelector((state) => state.statistics.status);
+
     useEffect(() => {
+        console.log(state.getState());
         if (userStatus === 'idle') {
             return dispatch(fetchUsers());
         }
-    }, [userStatus, dispatch])
-
-    useEffect(() => {
         if (postStatus === 'idle') {
             return dispatch(fetchPosts());
         }
-    }, [postStatus, dispatch])
+        if (statisticsStatus === 'idle') {
+            return dispatch(fetchStatistics(userId));
+        }
+    }, [userStatus, postStatus, statisticsStatus, dispatch]);
 
     if (!user) {
         return (
@@ -40,7 +44,7 @@ export const SingleUserPage = ({match}) => {
     }
 
     let postsAry;
-    console.log(state.getState());
+
     if (userStatus === 'loading') {
         postsAry = <div className="loader">Loading...</div>
     } else if (userStatus === 'succeeded') {
@@ -60,8 +64,10 @@ export const SingleUserPage = ({match}) => {
 
     return (
         <div>
-            <h1 style={{marginLeft: 260}}>Name: {user.name}, Email: {user.email}</h1>
+            <h1 className="titles">Name: {user.name}, Email: {user.email}</h1>
             <Divider/>
+            <h2 className="activity">User activity:</h2>
+            <Chart userId={userId} />
             <AddPost userId={userId}/>
             {postsAry}
         </div>

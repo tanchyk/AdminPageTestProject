@@ -35,7 +35,7 @@ export const UsersPage = ({}) => {
 
     return (
         <div>
-            <h1 style={{marginLeft: 260}}>Users</h1>
+            <h1 className="titles">Users</h1>
             {content}
         </div>
     );
